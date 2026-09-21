@@ -1,0 +1,30 @@
+
+import React from 'react';
+import BookCard from '@/components/share/BookCard';
+import { IBook } from '@/types/books.type';
+
+
+const getBooks = async () => {
+  const res = await fetch('http://localhost:3000/booksData.json');
+  const data = await res.json();
+  return data;
+};
+
+const Books = async () => {
+  const booksData = await getBooks();
+
+  return (
+    <section className="container mx-auto my-10.5 px-4">
+      <h2 className='font-bold text-3xl text-center py-5'>Books</h2>
+      {/* Books Grid */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {booksData.map((book: IBook) => (
+          <BookCard key={book.bookId} book={book} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default Books;
+
